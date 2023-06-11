@@ -1,0 +1,27 @@
+{
+  "name": "rapid-router",
+  "version": "1.0.0",
+  "description": "Quick and simple HTTP router",
+  "main": "./lib/main.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "type": "module",
+  "author": "Alex Lowe",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.3.0",
+    "typescript": "^5.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lowe-Man/rapid-router.git"
+  },
+  "keywords": [
+    "router"
+  ],
+  "bugs": {
+    "url": "https://github.com/Lowe-Man/rapid-router/issues"
+  },
+  "homepage": "https://github.com/Lowe-Man/rapid-router#readme"
+}
