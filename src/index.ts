@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from 'node:http';
+import { IncomingMessage, ServerResponse, createServer } from 'node:http';
 import { log } from 'node:console';
 import { RequestVerb, Route } from './types/index.js';
 
@@ -16,11 +16,25 @@ export class RapidRouter {
     this.routes.push({ method, url, handler })
   }
 
+  private findRoute(method: RequestVerb, url: string) {
+    return this.routes.find(route => route.method === method && route.url === url);
+  }
+
   public get(url: string, handler: Function) {
     this.addRoute(RequestVerb.GET, url, handler);
-    log(this.routes);
-    this.routes[0].handler.apply(this, [this.req, this.res]);
-    this.res.writeHead(200, { 'Content-Type': 'application/json' });
-    this.res.end(JSON.stringify({ data: 'hello world' }));
+    // parseUrl('/account/:id/:name', '/account/1234/John');
+  }
+
+  public listen(port: number, callback: () => void) {
+    createServer((req, res) => {
+      const method = req.method?.toUpperCase() as RequestVerb;
+      const url = req.url?.toLowerCase() as string;
+      const route = this.findRoute(method, url);
+      if (route) {
+        return route.handler.apply(this, [req, res]);
+      }
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Route not found' }));
+    }).listen(port, callback);
   }
 }
