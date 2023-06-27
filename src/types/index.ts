@@ -10,3 +10,6 @@ export interface Route {
     url: string,
     handler: Function
 }
+export interface Middleware {
+    handler: Function
+}
